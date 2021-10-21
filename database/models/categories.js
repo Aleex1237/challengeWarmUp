@@ -7,6 +7,10 @@ module.exports = (sequelize, dataTypes) => {
       autoIncrement: true,
       type: dataTypes.INTEGER.UNSIGNED,
     },
+    name: {
+      type: dataTypes.STRING,
+      allowNull: false,
+    },
   };
 
   let config = {
@@ -15,6 +19,13 @@ module.exports = (sequelize, dataTypes) => {
   };
 
   const Category = sequelize.define(alias, cols, config);
+
+  Category.associate = (models) => {
+    Category.hasMany(models.Post, {
+      as: "posts",
+      foreignKey: "idCategory",
+    });
+  };
 
   return Category;
 };
