@@ -73,4 +73,14 @@ module.exports = {
       console.log(error);
     }
   },
+  postDelete: async (req, res) => {
+    try {
+      await db.Post.destroy({ where: { id: req.params.id } });
+
+      return res.status(201).json({ msg: "Post eliminado!." });
+    } catch (error) {
+      res.status(500).json({ status: 500, msg: error });
+      console.log(error);
+    }
+  },
 };
