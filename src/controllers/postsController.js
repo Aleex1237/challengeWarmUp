@@ -44,21 +44,21 @@ module.exports = {
 
     let isImage = await isImageURL(req.body.image);
 
-    if (isImage) {
-      await db.Post.create({
-        title: title,
-        content: content,
-        image: image ? image : "defaultImage.png",
-        idCategory: idCategory ? +idCategory : 1,
-      });
-    } else {
-      return res.status(400).json({
-        status: 400,
-        msg: "Solo se acepta imagenes con formato jpg y png",
-      });
-    }
-
     try {
+      if (isImage) {
+        await db.Post.create({
+          title: title,
+          content: content,
+          image: image ? image : "https://www.kenyons.com/wp-content/uploads/2017/04/default-image.jpg",
+          idCategory: idCategory ? +idCategory : 1,
+        });
+      } else {
+        return res.status(400).json({
+          status: 400,
+          msg: "Solo se acepta imagenes con formato jpg y png",
+        });
+      }
+
       return res.status(201).json({ msg: "Creación exitosa." });
     } catch (error) {
       console.log(error);
