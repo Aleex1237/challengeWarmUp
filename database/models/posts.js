@@ -18,6 +18,12 @@ module.exports = (sequelize, dataTypes) => {
     image: {
       type: dataTypes.STRING,
       allowNull: true,
+      validate: {
+        isURL: {
+          args: true,
+          msg: "Este campo solo acepta URL",
+        },
+      },
     },
     idCategory: {
       type: dataTypes.INTEGER.UNSIGNED,

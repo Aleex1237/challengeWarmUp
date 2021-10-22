@@ -1,4 +1,5 @@
 const db = require("../../database/models");
+const isImageURL = require("image-url-validator").default;
 
 module.exports = {
   posts: async (req, res) => {
@@ -37,23 +38,34 @@ module.exports = {
       console.log(error);
     }
   },
+
   postCreate: async (req, res) => {
     const { title, content, image, idCategory } = req.body;
 
-    try {
+    let isImage = await isImageURL(req.body.image);
+
+    if (isImage) {
       await db.Post.create({
         title: title,
         content: content,
         image: image ? image : "defaultImage.png",
         idCategory: idCategory ? +idCategory : 1,
       });
+    } else {
+      return res.status(400).json({
+        status: 400,
+        msg: "Solo se acepta imagenes con formato jpg y png",
+      });
+    }
 
+    try {
       return res.status(201).json({ msg: "Creación exitosa." });
     } catch (error) {
       console.log(error);
-      return res.status(500).json({ status: 500, msg: error });
+      return res.status(500).json({ status: 500, msg: error.message });
     }
   },
+
   postUpdate: async (req, res) => {
     const { title, content, image, idCategory } = req.body;
     try {
