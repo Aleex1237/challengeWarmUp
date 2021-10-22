@@ -5,7 +5,6 @@ module.exports = {
     database: "challenge_warmup_db",
     host: "127.0.0.1",
     dialect: "mysql",
-    port: process.env.PORT,
   },
   test: {
     username: "root",
