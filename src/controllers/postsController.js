@@ -37,4 +37,20 @@ module.exports = {
       console.log(error);
     }
   },
+  postCreate: async (req, res) => {
+    const { title, content, image, idCategory } = req.body;
+
+    try {
+      await db.Post.create({
+        title: title,
+        content: content,
+        image: image,
+        idCategory: idCategory,
+      });
+
+      return res.status(201).json({ msg: "Creación exitosa." });
+    } catch (error) {
+      return res.status(500).json({ status: 500, msg: error });
+    }
+  },
 };
