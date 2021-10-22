@@ -44,13 +44,33 @@ module.exports = {
       await db.Post.create({
         title: title,
         content: content,
-        image: image,
-        idCategory: idCategory,
+        image: image ? image : "defaultImage.png",
+        idCategory: idCategory ? +idCategory : 1,
       });
 
       return res.status(201).json({ msg: "Creación exitosa." });
     } catch (error) {
+      console.log(error);
       return res.status(500).json({ status: 500, msg: error });
+    }
+  },
+  postUpdate: async (req, res) => {
+    const { title, content, image, idCategory } = req.body;
+    try {
+      await db.Post.update(
+        {
+          title: title,
+          content: content,
+          image: image ? image : "defaultImage.png",
+          idCategory: idCategory ? +idCategory : 1,
+        },
+        { where: { id: req.params.id } }
+      );
+
+      return res.status(201).json({ msg: "Actalización exitosa." });
+    } catch (error) {
+      res.status(500).json({ status: 500, msg: error });
+      console.log(error);
     }
   },
 };
