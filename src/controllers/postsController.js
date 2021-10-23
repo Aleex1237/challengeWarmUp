@@ -72,7 +72,7 @@ module.exports = {
       } else {
         return res.status(400).json({
           status: 400,
-          msg: "Solo se acepta imagenes con formato jpg y png",
+          msg: "La url de la imagen debe finalizar con: .jpg o .png",
         });
       }
 
@@ -88,19 +88,32 @@ module.exports = {
     let isImage = await isImageURL(req.body.image);
 
     try {
-      if (isImage) {
-        await db.Post.update(
-          {
-            title: title,
-            content: content,
-            image: image,
-            idCategory: idCategory ? +idCategory : 1,
-          },
-          { where: { id: req.params.id } }
-        );
-      }
+      let post = await db.Post.findByPk(req.params.id);
 
-      return res.status(201).json({ msg: "Actalización exitosa." });
+      if (post) {
+        if (isImage) {
+          await db.Post.update(
+            {
+              title: title,
+              content: content,
+              image: image,
+              idCategory: idCategory ? +idCategory : 1,
+            },
+            { where: { id: post.id } }
+          );
+        } else {
+          return res.status(400).json({
+            status: 400,
+            msg: "Solo se acepta imagenes con formato jpg y png",
+          });
+        }
+
+        return res.status(201).json({status:201, msg: "Actalización exitosa." });
+      }
+      return res.status(400).json({
+        status: `${400}`,
+        msg: `No existe el post`,
+      });
     } catch (error) {
       res.status(500).json({ status: 500, msg: error });
       console.log(error);
@@ -108,9 +121,16 @@ module.exports = {
   },
   postDelete: async (req, res) => {
     try {
-      await db.Post.destroy({ where: { id: req.params.id } });
+      let post = await db.Post.findByPk(req.params.id);
+      if (post) {
+        await db.Post.destroy({ where: { id: req.params.id } });
 
-      return res.status(201).json({ msg: "Post eliminado!." });
+        return res.status(201).json({ msg: "Post eliminado!." });
+      }
+      return res.status(400).json({
+        status: `${400}`,
+        msg: `No existe el post`,
+      });
     } catch (error) {
       res.status(500).json({ status: 500, msg: error });
       console.log(error);
