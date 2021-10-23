@@ -1,0 +1,162 @@
+{
+	"info": {
+		"_postman_id": "83b3f5e8-24c2-4a9f-b996-1eaba674814a",
+		"name": "POSTS API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Posts",
+			"item": [
+				{
+					"name": "GET ALL POSTS",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/posts",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"posts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET A POST",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/posts/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"posts",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CREATE A POST",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "title",
+									"value": "post de acción",
+									"type": "text"
+								},
+								{
+									"key": "content",
+									"value": "acción",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"value": "https://dlprivateserver.com/wp-content/uploads/2021/03/Gu%C3%ADa-de-Genshin-Impact-Yan-Fei-habilidades-fecha-de-lanzamiento.jpg",
+									"type": "text"
+								},
+								{
+									"key": "idCategory",
+									"value": "2",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/posts",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"posts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE A POST",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "title",
+									"value": "post terror",
+									"type": "text"
+								},
+								{
+									"key": "content",
+									"value": "terror",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"value": "https://dlprivateserver.com/wp-content/uploads/2021/03/Gu%C3%ADa-de-Genshin-Impact-Yan-Fei-habilidades-fecha-de-lanzamiento.jpg",
+									"type": "text"
+								},
+								{
+									"key": "idCategory",
+									"value": "3",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/posts/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"posts",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE A POST",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/posts/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"posts",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
