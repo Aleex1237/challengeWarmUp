@@ -49,7 +49,7 @@ module.exports = {
         await db.Post.create({
           title: title,
           content: content,
-          image: image ? image : "https://www.kenyons.com/wp-content/uploads/2017/04/default-image.jpg",
+          image: image,
           idCategory: idCategory ? +idCategory : 1,
         });
       } else {
@@ -68,16 +68,20 @@ module.exports = {
 
   postUpdate: async (req, res) => {
     const { title, content, image, idCategory } = req.body;
+    let isImage = await isImageURL(req.body.image);
+
     try {
-      await db.Post.update(
-        {
-          title: title,
-          content: content,
-          image: image ? image : "defaultImage.png",
-          idCategory: idCategory ? +idCategory : 1,
-        },
-        { where: { id: req.params.id } }
-      );
+      if (isImage) {
+        await db.Post.update(
+          {
+            title: title,
+            content: content,
+            image: image,
+            idCategory: idCategory ? +idCategory : 1,
+          },
+          { where: { id: req.params.id } }
+        );
+      }
 
       return res.status(201).json({ msg: "Actalización exitosa." });
     } catch (error) {
