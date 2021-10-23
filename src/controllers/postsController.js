@@ -3,8 +3,15 @@ const isImageURL = require("image-url-validator").default;
 
 module.exports = {
   posts: async (req, res) => {
-    let posts = await db.Post.findAll();
-
+    let posts = await db.Post.findAll({
+      include: [{ association: "category" }],
+      attributes: [
+        "id",
+        ["title", "titulo"],
+        ["image", "imagen"],
+        ["createdAt", "Fecha de creación"],
+      ],
+    });
     try {
       if (posts.length > 0) {
         return res.status(200).json({
